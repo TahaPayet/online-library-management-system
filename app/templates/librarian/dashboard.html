@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Librarian Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>Librarian Dashboard</h2>
+    <p>Welcome back, {{ current_user.name }}. Manage loans and book returns.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left:3px solid #f39c12;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Active Loans</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e8eaf0;">{{ active_loans }}</div>
+            <a href="{{ url_for('librarian.loans') }}" style="font-size:0.78rem; color:#f39c12; text-decoration:none;">View All →</a>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left:3px solid #e74c3c;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Overdue</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e74c3c;">{{ overdue_loans }}</div>
+            <a href="{{ url_for('librarian.loans') }}" style="font-size:0.78rem; color:#e74c3c; text-decoration:none;">Review →</a>
+        </div>
+    </div>
+</div>
+
+<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px;">
+    <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">Quick Actions</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="{{ url_for('librarian.issue_book') }}" class="btn-accent">
+            <i class="bi bi-plus-circle"></i> Issue Book
+        </a>
+        <a href="{{ url_for('librarian.loans') }}" class="btn-ghost">
+            <i class="bi bi-journal-text"></i> All Loans
+        </a>
+    </div>
+</div>
+{% endblock %}

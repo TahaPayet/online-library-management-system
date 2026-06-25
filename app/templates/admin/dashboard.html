@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome back, {{ current_user.name }}. Here's what's happening today.</p>
+</div>
+
+<!-- STAT ROW — small, subtle -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left: 3px solid #4f8ef7;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                        letter-spacing:1px; margin-bottom:6px;">Total Books</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e8eaf0;">{{ total_books }}</div>
+            <a href="{{ url_for('admin.books') }}"
+               style="font-size:0.78rem; color:#4f8ef7; text-decoration:none;">Manage →</a>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left: 3px solid #2ecc71;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                        letter-spacing:1px; margin-bottom:6px;">Total Members</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e8eaf0;">{{ total_members }}</div>
+            <a href="{{ url_for('admin.members') }}"
+               style="font-size:0.78rem; color:#2ecc71; text-decoration:none;">Manage →</a>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left: 3px solid #f39c12;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                        letter-spacing:1px; margin-bottom:6px;">Active Loans</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e8eaf0;">{{ active_loans }}</div>
+            <a href="{{ url_for('admin.reports') }}"
+               style="font-size:0.78rem; color:#f39c12; text-decoration:none;">View →</a>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div style="background:#1e2130; border:1px solid #2a2d3e; border-left: 3px solid #e74c3c;
+                    border-radius:10px; padding:16px;">
+            <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                        letter-spacing:1px; margin-bottom:6px;">Pending Approvals</div>
+            <div style="font-size:1.6rem; font-weight:700; color:#e8eaf0;">{{ pending_approvals }}</div>
+            <a href="{{ url_for('admin.members') }}"
+               style="font-size:0.78rem; color:#e74c3c; text-decoration:none;">Review →</a>
+        </div>
+    </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px; margin-bottom:24px;">
+    <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                letter-spacing:1px; margin-bottom:16px;">Quick Actions</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="{{ url_for('admin.add_book') }}" class="btn-accent">
+            <i class="bi bi-plus-circle"></i> Add Book
+        </a>
+        <a href="{{ url_for('admin.members') }}" class="btn-ghost">
+            <i class="bi bi-people"></i> View Members
+        </a>
+        <a href="{{ url_for('admin.reports') }}" class="btn-ghost">
+            <i class="bi bi-bar-chart"></i> Reports
+        </a>
+        <a href="{{ url_for('admin.export_report') }}" class="btn-ghost">
+            <i class="bi bi-download"></i> Export CSV
+        </a>
+    </div>
+</div>
+
+<!-- RECENT ACTIVITY PLACEHOLDER -->
+<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px;">
+    <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase;
+                letter-spacing:1px; margin-bottom:16px;">System Overview</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="padding:16px; background:#252840; border-radius:8px;">
+            <div style="color:#8b8fa8; font-size:0.85rem;">Books in Catalog</div>
+            <div style="color:#e8eaf0; font-size:1.2rem; font-weight:600; margin-top:4px;">
+                {{ total_books }} titles
+            </div>
+        </div>
+        <div style="padding:16px; background:#252840; border-radius:8px;">
+            <div style="color:#8b8fa8; font-size:0.85rem;">Registered Members</div>
+            <div style="color:#e8eaf0; font-size:1.2rem; font-weight:600; margin-top:4px;">
+                {{ total_members }} members
+            </div>
+        </div>
+        <div style="padding:16px; background:#252840; border-radius:8px;">
+            <div style="color:#8b8fa8; font-size:0.85rem;">Books Currently Loaned</div>
+            <div style="color:#e8eaf0; font-size:1.2rem; font-weight:600; margin-top:4px;">
+                {{ active_loans }} loans
+            </div>
+        </div>
+        <div style="padding:16px; background:#252840; border-radius:8px;">
+            <div style="color:#8b8fa8; font-size:0.85rem;">Awaiting Approval</div>
+            <div style="color:#e74c3c; font-size:1.2rem; font-weight:600; margin-top:4px;">
+                {{ pending_approvals }} pending
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Member Management{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>Member Management</h2>
+    <p>Approve, review and manage library members.</p>
+</div>
+
+<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; overflow:hidden;">
+    <table class="dark-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td style="font-weight:500;">{{ member.name }}</td>
+                <td style="color:#8b8fa8;">{{ member.email }}</td>
+                <td style="color:#8b8fa8;">{{ member.phone or '—' }}</td>
+                <td>
+                    {% if member.is_approved %}
+                        <span class="badge-approved">Approved</span>
+                    {% else %}
+                        <span class="badge-pending">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not member.is_approved %}
+                        <a href="{{ url_for('admin.approve_member', user_id=member.id) }}"
+                           style="color:#2ecc71; text-decoration:none; margin-right:12px; font-size:0.85rem;">
+                            <i class="bi bi-check-circle"></i> Approve
+                        </a>
+                        <a href="{{ url_for('admin.reject_member', user_id=member.id) }}"
+                           onclick="return confirm('Reject and remove this member?')"
+                           style="color:#e74c3c; text-decoration:none; font-size:0.85rem;">
+                            <i class="bi bi-x-circle"></i> Reject
+                        </a>
+                    {% else %}
+                        <span style="color:#8b8fa8; font-size:0.85rem;">—</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align:center; color:#8b8fa8; padding:40px;">
+                    <i class="bi bi-people" style="font-size:2rem; display:block; margin-bottom:8px;"></i>
+                    No members found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

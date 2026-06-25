@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}My Loans{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>My Loans</h2>
+    <p>Your borrowing history and active loans.</p>
+</div>
+
+<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; overflow:hidden;">
+    <table class="dark-table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Fine</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loans %}
+            <tr>
+                <td style="font-weight:500;">{{ loan.book.title }}</td>
+                <td style="color:#8b8fa8;">{{ loan.book.author }}</td>
+                <td style="color:#8b8fa8;">{{ loan.borrow_date }}</td>
+                <td>
+                    {% if not loan.is_returned and loan.due_date < today %}
+                        <span class="badge-overdue">{{ loan.due_date }} (Overdue)</span>
+                    {% else %}
+                        {{ loan.due_date }}
+                    {% endif %}
+                </td>
+                <td style="color:#8b8fa8;">{{ loan.return_date or '—' }}</td>
+                <td>
+                    {% if loan.is_returned %}
+                        <span class="badge-returned">Returned</span>
+                    {% elif loan.due_date < today %}
+                        <span class="badge-overdue">Overdue</span>
+                    {% else %}
+                        <span class="badge-active">Active</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if loan.fine %}
+                        <span style="color:#e74c3c;">¥{{ loan.fine.amount }}</span>
+                    {% else %}—{% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" style="text-align:center; color:#8b8fa8; padding:40px;">
+                    You have no loan records yet.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
