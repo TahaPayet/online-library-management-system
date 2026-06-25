@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-{% block title %}Loan Records{% endblock %}
+{% block title %}{{ _('Loan Records') }}{% endblock %}
 {% block content %}
 <div class="page-header">
-    <h2>Loan Records</h2>
-    <p>Review all borrowing activity and confirm book returns.</p>
+    <h2>{{ _('Loan Records') }}</h2>
+    <p>{{ _('Review all borrowing activity and confirm book returns.') }}</p>
 </div>
 
-<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; overflow:hidden;">
+<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
     <table class="dark-table">
         <thead>
             <tr>
-                <th>Member</th>
-                <th>Book</th>
-                <th>Borrow Date</th>
-                <th>Due Date</th>
-                <th>Days Remaining</th>
-                <th>Status</th>
-                <th>Fine</th>
-                <th>Action</th>
+                <th>{{ _('Member') }}</th>
+                <th>{{ _('Book') }}</th>
+                <th>{{ _('Borrow Date') }}</th>
+                <th>{{ _('Due Date') }}</th>
+                <th>{{ _('Days Remaining') }}</th>
+                <th>{{ _('Status') }}</th>
+                <th>{{ _('Fine') }}</th>
+                <th>{{ _('Action') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -26,41 +26,41 @@
             <tr>
                 <td style="font-weight:500;">{{ loan.member.name }}</td>
                 <td>{{ loan.book.title }}</td>
-                <td style="color:#8b8fa8;">{{ loan.borrow_date }}</td>
+                <td style="color:var(--text-muted);">{{ loan.borrow_date }}</td>
                 <td>{{ loan.due_date }}</td>
                 <td>
                     {% if loan.is_returned %}
-                        <span style="color:#8b8fa8;">—</span>
+                        <span style="color:var(--text-muted);">—</span>
                     {% elif days_remaining > 0 %}
-                        <span style="color:#2ecc71; font-weight:600;">
-                            {{ days_remaining }} days left
+                        <span style="color:var(--accent-green); font-weight:600;">
+                            {{ days_remaining }} {{ _('days left') }}
                         </span>
                     {% elif days_remaining == 0 %}
-                        <span style="color:#f39c12; font-weight:600;">
-                            Due today
+                        <span style="color:var(--accent-yellow); font-weight:600;">
+                            {{ _('Due today') }}
                         </span>
                     {% else %}
-                        <span style="color:#e74c3c; font-weight:600;">
-                            {{ days_remaining }} days
+                        <span style="color:var(--accent-red); font-weight:600;">
+                            {{ days_remaining }} {{ _('days') }}
                         </span>
                     {% endif %}
                 </td>
                 <td>
                     {% if loan.is_returned %}
-                        <span class="badge-returned">Returned</span>
+                        <span class="badge-returned">{{ _('Returned') }}</span>
                     {% elif loan.due_date < today %}
-                        <span class="badge-overdue">Overdue</span>
+                        <span class="badge-overdue">{{ _('Overdue') }}</span>
                     {% else %}
-                        <span class="badge-active">Active</span>
+                        <span class="badge-active">{{ _('Active') }}</span>
                     {% endif %}
                 </td>
                 <td>
                     {% if loan.fine %}
-                        <span style="color:#e74c3c;">¥{{ loan.fine.amount }}</span>
+                        <span style="color:var(--accent-red);">¥{{ loan.fine.amount }}</span>
                         {% if loan.fine.is_paid %}
-                            <span class="badge-approved" style="margin-left:4px;">Paid</span>
+                            <span class="badge-approved" style="margin-left:4px;">{{ _('Paid') }}</span>
                         {% else %}
-                            <span class="badge-overdue" style="margin-left:4px;">Unpaid</span>
+                            <span class="badge-overdue" style="margin-left:4px;">{{ _('Unpaid') }}</span>
                         {% endif %}
                     {% else %}
                         —
@@ -69,21 +69,21 @@
                 <td>
                     {% if not loan.is_returned %}
                         <a href="{{ url_for('admin.confirm_return', loan_id=loan.id) }}"
-                           onclick="return confirm('Confirm return of this book?')"
-                           style="color:#2ecc71; text-decoration:none; font-size:0.85rem;">
-                            <i class="bi bi-check-circle"></i> Confirm Return
+                           onclick="return confirm('{{ _('Confirm') }}?')"
+                           style="color:var(--accent-green); text-decoration:none; font-size:0.85rem;">
+                            <i class="bi bi-check-circle"></i> {{ _('Confirm Return') }}
                         </a>
                     {% else %}
-                        <span style="color:#8b8fa8; font-size:0.85rem;">
-                            Returned {{ loan.return_date }}
+                        <span style="color:var(--text-muted); font-size:0.85rem;">
+                            {{ _('Returned') }} {{ loan.return_date }}
                         </span>
                     {% endif %}
                 </td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="8" style="text-align:center; color:#8b8fa8; padding:40px;">
-                    No loan records found.
+                <td colspan="8" style="text-align:center; color:var(--text-muted); padding:40px;">
+                    {{ _('No loan records found.') }}
                 </td>
             </tr>
             {% endfor %}

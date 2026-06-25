@@ -1,41 +1,41 @@
 {% extends 'base.html' %}
-{% block title %}Reports{% endblock %}
+{% block title %}{{ _('Reports') }}{% endblock %}
 {% block content %}
 <div class="page-header d-flex justify-content-between align-items-center">
     <div>
-        <h2>Reports</h2>
-        <p>Library activity summary and analytics.</p>
+        <h2>{{ _('Reports') }}</h2>
+        <p>{{ _('Library activity summary and analytics.') }}</p>
     </div>
     <a href="{{ url_for('admin.export_report') }}" class="btn-accent">
-        <i class="bi bi-download"></i> Export CSV
+        <i class="bi bi-download"></i> {{ _('Export CSV') }}
     </a>
 </div>
 
-<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px; margin-bottom:20px;">
-    <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
-        Most Borrowed Books (Top 10)
+<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px;">
+    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
+        {{ _('Most Borrowed Books (Top 10)') }}
     </div>
     <table class="dark-table">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>ISBN</th>
-                <th>Times Borrowed</th>
+                <th>{{ _('Title') }}</th>
+                <th>{{ _('Author') }}</th>
+                <th>{{ _('ISBN') }}</th>
+                <th>{{ _('Times Borrowed') }}</th>
             </tr>
         </thead>
         <tbody>
             {% for book, count in most_borrowed %}
             <tr>
                 <td style="font-weight:500;">{{ book.title }}</td>
-                <td style="color:#8b8fa8;">{{ book.author }}</td>
-                <td style="color:#8b8fa8; font-family:monospace;">{{ book.isbn }}</td>
-                <td><span class="badge-approved">{{ count }} times</span></td>
+                <td style="color:var(--text-muted);">{{ book.author }}</td>
+                <td style="color:var(--text-muted); font-family:monospace;">{{ book.isbn }}</td>
+                <td><span class="badge-approved">{{ count }} {{ _('times') }}</span></td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="4" style="text-align:center; color:#8b8fa8; padding:30px;">
-                    No loan data yet.
+                <td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">
+                    {{ _('No loan data yet.') }}
                 </td>
             </tr>
             {% endfor %}
@@ -43,18 +43,18 @@
     </table>
 </div>
 
-<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px; margin-bottom:20px;">
-    <div style="font-size:0.75rem; color:#e74c3c; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
-        Overdue Loans
+<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px;">
+    <div style="font-size:0.75rem; color:var(--accent-red); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
+        {{ _('Overdue Loans') }}
     </div>
     <table class="dark-table">
         <thead>
             <tr>
-                <th>Member</th>
-                <th>Book</th>
-                <th>Due Date</th>
-                <th>Days Overdue</th>
-                <th>Fine</th>
+                <th>{{ _('Member') }}</th>
+                <th>{{ _('Book') }}</th>
+                <th>{{ _('Due Date') }}</th>
+                <th>{{ _('Days Overdue') }}</th>
+                <th>{{ _('Fine') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -67,21 +67,21 @@
                     <td>{{ loan.due_date }}</td>
                     <td>
                         {% if days_remaining > 0 %}
-                            <span style="color:#2ecc71;">{{ days_remaining }} days left</span>
+                            <span style="color:var(--accent-green);">{{ days_remaining }} {{ _('days left') }}</span>
                         {% elif days_remaining == 0 %}
-                            <span style="color:#f39c12;">Due today</span>
+                            <span style="color:var(--accent-yellow);">{{ _('Due today') }}</span>
                         {% else %}
-                            <span style="color:#e74c3c;">{{ days_remaining }} days</span>
+                            <span style="color:var(--accent-red);">{{ days_remaining }} {{ _('days') }}</span>
                         {% endif %}
                     </td>
                 </tr>
-                <td style="color:#e74c3c;">{{ (today - loan.due_date).days }} days</td>
+                <td style="color:var(--accent-red);">{{ (today - loan.due_date).days }} {{ _('days') }}</td>
                 <td>{% if loan.fine %}¥{{ loan.fine.amount }}{% else %}—{% endif %}</td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="5" style="text-align:center; color:#8b8fa8; padding:30px;">
-                    No overdue loans.
+                <td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">
+                    {{ _('No overdue loans.') }}
                 </td>
             </tr>
             {% endfor %}
@@ -89,17 +89,16 @@
     </table>
 </div>
 
-<div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:24px;">
-    <div style="font-size:0.75rem; color:#8b8fa8; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
-        Today's Transactions — {{ today }}
+<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px;">
+    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">
+        {{ _('Today\'s Transactions') }} — {{ today }}
     </div>
     <table class="dark-table">
         <thead>
             <tr>
-                <th>Member</th>
-                <th>Book</th>
-                <th>Due Date</th>
-                <th>Days Remaining</th>
+                <th>{{ _('Member') }}</th>
+                <th>{{ _('Book') }}</th>
+                <th>{{ _('Due Date') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -111,8 +110,8 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="3" style="text-align:center; color:#8b8fa8; padding:30px;">
-                    No transactions today.
+                <td colspan="3" style="text-align:center; color:var(--text-muted); padding:30px;">
+                    {{ _('No transactions today.') }}
                 </td>
             </tr>
             {% endfor %}

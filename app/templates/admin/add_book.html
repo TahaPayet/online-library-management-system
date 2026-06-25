@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
-{% block title %}Add Book{% endblock %}
+{% block title %}{{ _('Add Book') }}{% endblock %}
 {% block content %}
 <div class="page-header">
-    <h2>Add New Book</h2>
-    <p>Enter book details to add it to the catalog.</p>
+    <h2>{{ _('Add New Book') }}</h2>
+    <p>{{ _('Enter book details to add it to the catalog.') }}</p>
 </div>
 <div style="max-width:560px;">
-    <div style="background:#1e2130; border:1px solid #2a2d3e; border-radius:12px; padding:28px;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px;">
         <form method="POST" class="dark-form">
             <div class="mb-3">
-                <label class="form-label">Title</label>
+                <label class="form-label">{{ _('Title') }}</label>
                 <input type="text" name="title" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Author</label>
+                <label class="form-label">{{ _('Author') }}</label>
                 <input type="text" name="author" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">ISBN</label>
+                <label class="form-label">{{ _('ISBN') }}</label>
                 <input type="text" name="isbn" class="form-control" required maxlength="13">
             </div>
             <div class="mb-3">
-                <label class="form-label">Category</label>
+                <label class="form-label">{{ _('Category') }}</label>
                 <select name="category" class="form-select">
-                    <option value="">— Select Category —</option>
+                    <option value="">{{ _('-- Select Category --') }}</option>
                     <option>Fiction</option>
                     <option>Non-Fiction</option>
                     <option>Science Fiction</option>
@@ -57,19 +57,19 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label class="form-label">Cover Image URL</label>
+                <label class="form-label">{{ _('Cover Image URL') }}</label>
                 <input type="text" name="cover_image" class="form-control"
                        placeholder="https://covers.openlibrary.org/...">
             </div>
             <div class="mb-4">
-                <label class="form-label">Total Copies</label>
+                <label class="form-label">{{ _('Total Copies') }}</label>
                 <input type="number" name="total_copies" class="form-control" value="1" min="1" required>
             </div>
             <div style="display:flex; gap:10px;">
                 <button type="submit" class="btn-accent">
-                    <i class="bi bi-plus-circle"></i> Add Book
+                    <i class="bi bi-plus-circle"></i> {{ _('Add Book') }}
                 </button>
-                <a href="{{ url_for('admin.books') }}" class="btn-ghost">Cancel</a>
+                <a href="{{ url_for('admin.books') }}" class="btn-ghost">{{ _('Cancel') }}</a>
             </div>
         </form>
     </div>

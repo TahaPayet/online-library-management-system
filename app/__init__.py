@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, redirect, url_for, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
+from app.translations import zh, en
 
 load_dotenv()
 
@@ -44,5 +45,21 @@ def create_app():
     app.register_blueprint(librarian_bp)
     app.register_blueprint(member_bp)
     app.register_blueprint(main_bp)
+
+    @app.context_processor
+    def inject_translations():
+        def _(text):
+            lang = request.cookies.get('lang', 'en')
+            if lang == 'zh':
+                return zh.get(text, text)
+            return text
+        return dict(_=_)
+
+    @app.route('/lang/<code>')
+    def set_lang(code):
+        resp = make_response(redirect(request.referrer or url_for('main.index')))
+        if code in ('en', 'zh'):
+            resp.set_cookie('lang', code, max_age=365*24*3600)
+        return resp
 
     return app

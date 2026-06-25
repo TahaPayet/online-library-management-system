@@ -1,7 +1,2 @@
-venv/ 
-.env 
-__pycache__/ 
-*.pyc 
-app/static/uploads/ 
-instance/ 
-.coverage
+__pycache__/
+*.pyc
