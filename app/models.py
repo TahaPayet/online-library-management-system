@@ -30,8 +30,7 @@ class Book(db.Model):
     description = db.Column(db.Text)
     total_copies = db.Column(db.Integer, default=1)
     available_copies = db.Column(db.Integer, default=1)
-    rating = db.Column(db.Numeric(3, 1), default=4.0) 
-    description = db.Column(db.Text)
+    rating = db.Column(db.Numeric(3, 1), default=4.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     loans = db.relationship('Loan', backref='book', lazy=True)
 

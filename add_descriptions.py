@@ -1,6 +1,3 @@
-import os
-os.environ['DATABASE_URL'] = 'mysql+pymysql://root:Library2024@localhost/library_db'
-
 from app import create_app, db
 from app.models import Book
 
